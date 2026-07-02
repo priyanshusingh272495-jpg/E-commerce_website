@@ -1,0 +1,77 @@
+/* ==========================================================================
+   ADVANCED CARDS STYLING FOR FRESHCART
+   ========================================================================== */
+
+/* 1. Base Card Structure (Glassmorphism & Clean Setup) */
+.category-card {
+    background: rgba(255, 255, 255, 0.71) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(0, 0, 0, 0.055) !important;
+    border-radius: 1rem !important; /* Premium rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.16), 0 1px 3px rgba(0, 0, 0, 0.03) !important; /* Subtle shadow for depth */
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    /* Ultra smooth physics-based timing function for hover */
+    transition: cubic-bezier(0.25, 0.8, 0.25, 1) 0.4s !important;
+}
+
+/* 2. Content Alignment Inside Card */
+.category-card .fs-1 {
+    display: inline-block;
+    font-size: 2.75rem !important;
+    margin-bottom: 1.25rem;
+    /* Soft bounce transition for emojis */
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.category-card .card-title {
+    font-weight: 700 !important;
+    letter-spacing: -0.01em;
+    color: #1f2937 !important;
+    transition: color 0.3s ease;
+}
+
+/* 3. Advanced Hover Effects (3D Lift, Red Glow & Shadow) */
+.category-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    border-color: rgba(220, 38, 38, 0.3) !important; /* Subtle red border on hover */
+    
+    /* Premium layered box shadow with a touch of brand red */
+    box-shadow: 
+        0 20px 25px -5px rgba(0, 0, 0, 0.05),
+        0 10px 10px -5px rgba(0, 0, 0, 0.03),
+        0 0 30px rgba(220, 38, 38, 0.114) !important; 
+}
+
+/* Hover par text color red ho jayega */
+.category-card:hover .card-title {
+    color: #dc2626 !important;
+}
+
+/* Hover par emoji thoda float aur pop-up karega */
+.category-card:hover .fs-1 {
+    transform: scale(1.2) translateY(-4px);
+}
+
+/* 4. Interactive Background Glow Element (Aapke cards ko premium texture dene ke liye) */
+.category-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(220, 38, 38, 0.03) 0%, transparent 70%);
+    opacity: 0;
+    transform: scale(0.5);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.category-card:hover::before {
+    opacity: 1;
+    transform: scale(1);
+}
