@@ -1,0 +1,523 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreshCart - Beverages</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background: radial-gradient(circle at top left, rgba(191, 219, 254, 0.24), transparent 22%),
+                        radial-gradient(circle at top right, rgba(56, 189, 248, 0.14), transparent 20%),
+                        linear-gradient(180deg, #eff9ff 0%, #eef4ff 40%, #ffffff 100%);
+            color: #111827;
+        }
+        .section-hero {
+            padding-bottom: 2.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .section-hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 15% 20%, rgba(252, 211, 77, 0.12), transparent 22%),
+                        radial-gradient(circle at 85% 10%, rgba(248, 113, 113, 0.12), transparent 18%);
+            pointer-events: none;
+        }
+        .section-hero .section-pill {
+            background: rgba(220, 38, 38, 0.12);
+            color: #dc2626;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+        .section-hero h1 {
+            font-size: clamp(2.5rem, 4vw, 4.6rem);
+            line-height: 1.02;
+            letter-spacing: -0.04em;
+        }
+        .section-hero p {
+            max-width: 44rem;
+        }
+        .hero-highlight {
+            margin-top: 1.75rem;
+            padding: 1.4rem 1.5rem;
+            border-radius: 1.5rem;
+            background: rgba(255, 255, 255, 0.96);
+            border: 1px solid rgba(220, 38, 38, 0.12);
+            box-shadow: 0 22px 50px rgba(15, 23, 42, 0.06);
+        }
+        .hero-highlight h3 {
+            font-size: 1.05rem;
+            margin-bottom: 0.35rem;
+        }
+        .hero-highlight p {
+            margin: 0;
+            color: #6b7280;
+        }
+        .stat-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 1.5rem;
+            border: 1px solid rgba(220, 38, 38, 0.12);
+            box-shadow: 0 22px 55px rgba(15, 23, 42, 0.08);
+            padding: 1.4rem;
+            min-height: 140px;
+        }
+        .stat-card strong {
+            display: block;
+            font-size: 1.6rem;
+            color: #111827;
+        }
+        .stat-card span {
+            color: #6b7280;
+        }
+        .product-grid {
+            background: rgba(255, 255, 255, 0.96);
+            border-radius: 2.2rem;
+            padding: 2.5rem 1.75rem 1.5rem;
+            box-shadow: 0 32px 100px rgba(15, 23, 42, 0.1);
+            border: 1px solid rgba(220, 38, 38, 0.12);
+            backdrop-filter: blur(16px);
+        }
+        .product-card {
+            border-radius: 1.75rem;
+            border: 1px solid rgba(220, 38, 38, 0.12);
+            background: linear-gradient(180deg, #ffffff 0%, #fff5f5 100%);
+            box-shadow: 0 24px 55px rgba(15, 23, 42, 0.08);
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 1.35rem;
+            min-height: 380px;
+            overflow: hidden;
+        }
+        .product-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 28px 50px rgba(15, 23, 42, 0.16);
+            border-color: rgba(220, 38, 38, 0.22);
+        }
+        .product-card img {
+            min-height: 168px;
+            object-fit: cover;
+            border-radius: 1.25rem;
+            width: 100%;
+        }
+        .product-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.4rem 0.85rem;
+            border-radius: 999px;
+            background: rgba(254, 226, 226, 0.9);
+            color: #b91c1c;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+        }
+        .product-desc {
+            color: #4b5563;
+            line-height: 1.75;
+            min-height: 4rem;
+        }
+        .product-card h3 {
+            font-size: 1.02rem;
+        }
+        .product-card .btn {
+            align-self: flex-end;
+            min-width: 130px;
+        }
+        .price-label {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #d1fae5;
+            color: #047857;
+            padding: 0.45rem 0.85rem;
+            border-radius: 999px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+        .brand-word {
+            color: #dc2626 !important;
+        }
+        .btn-brand {
+            background-color: #dc2626 !important;
+            color: white !important;
+            border: none !important;
+            box-shadow: 0 14px 28px rgba(220, 38, 38, 0.18);
+        }
+    </style>
+</head>
+<body class="bg-light d-flex flex-column min-vh-screen page-shell">
+    <nav class="navbar navbar-expand-lg navbar-glass sticky-top py-3">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-3" href="index.html">
+                <h1><span class="brand-word">Fresh</span><span class="text-dark">Cart</span></h1>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0 fw-medium">
+                    <li class="nav-item">
+                        <a class="nav-link text-secondary" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-secondary" href="fruits-vegetable.html">Fruits & Vegetables</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active text-brand" href="beverages.html">Beverages</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-secondary" href="dairy.html">Dairy</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-secondary" href="snacks.html">Snacks</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-secondary" href="about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-secondary" href="contact.html">Contact</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center gap-3">
+                    <a href="login.html" class="nav-link fw-medium text-dark">Login</a>
+                    <a href="signup.html" class="btn btn-brand px-3 py-2 fw-medium">Sign Up</a>
+                    <a href="cart.html" class="position-relative p-2 text-secondary">
+                        <span class="fs-4">🛒</span>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-brand text-white">0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <main class="flex-grow-1">
+        <section class="section-hero container py-5">
+            <div class="row align-items-center gy-4">
+                <div class="col-lg-7">
+                    <span class="section-pill">Ready-to-Drink</span>
+                    <h1 class="fw-bold text-dark mb-3">Refreshing Beverages for <span style="color: #dc2626;">Every</span> Mood</h1>
+                    <p class="text-muted fs-6 mb-4">Shop our curated range of juices, smoothies, cold brews, and hydration staples — all fresh, flavorful, and fast-delivered.</p>
+                    <div class="hero-highlight">
+                        <h3>Exclusive Beverage Bundles</h3>
+                        <p>Choose from seasonal bundles with free delivery and priority packing for the freshest taste.</p>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="row g-3">
+                        <div class="col-6">
+                            <div class="stat-card">
+                                <strong>120+</strong>
+                                <span>Fresh Drinks</span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="stat-card">
+                                <strong>4.9★</strong>
+                                <span>Customer Rating</span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="stat-card">
+                                <strong>24H</strong>
+                                <span>Delivery Support</span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="stat-card">
+                                <strong>100%</strong>
+                                <span>Fresh Quality</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="products" class="product-grid container pb-5">
+            <div class="text-center mb-5">
+                <span class="section-pill">Best sellers</span>
+                <h2 class="text-center fw-bold text-dark mb-3">Beverage Collection</h2>
+                <p class="text-muted mx-auto" style="max-width: 680px;">Enjoy a selection of refreshing beverages, from smoothies to sparkling waters, crafted for taste and convenience.</p>
+            </div>
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-5 g-4">
+                <div class="col">
+                    <article class="product-card p-3 h-100">
+                        <span class="product-tag">Fresh</span>
+                        <img src="https://images.pexels.com/photos/414645/pexels-photo-414645.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Orange Juice" class="img-fluid rounded-4 mb-3">
+                        <h3 class="h6 fw-semibold mb-1">Orange Juice</h3>
+                        <p class="product-desc mb-3">Cold-pressed orange juice with a bright, zesty flavor that refreshes instantly.</p>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="price-label">₹149</span>
+                            <a href="#" class="btn btn-brand btn-sm px-3 py-2">Add to Cart</a>
+                        </div>
+                    </article>
+                </div>
+                <div class="col">
+                    <article class="product-card p-3 h-100">
+                        <span class="product-tag">Organic</span>
+                        <img src="https://images.pexels.com/photos/1092757/pexels-photo-1092757.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Green Smoothie" class="img-fluid rounded-4 mb-3">
+                        <h3 class="h6 fw-semibold mb-1">Green Smoothie</h3>
+                        <p class="product-desc mb-3">A nutrient-rich blend of spinach, apple, banana, and almond milk.</p>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="price-label">₹179</span>
+                            <a href="#" class="btn btn-brand btn-sm px-3 py-2">Add to Cart</a>
+                        </div>
+                    </article>
+                </div>
+                <div class="col">
+                    <article class="product-card p-3 h-100">
+                        <span class="product-tag">Chilled</span>
+                        <img src="https://images.pexels.com/photos/433343/pexels-photo-433343.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Iced Coffee" class="img-fluid rounded-4 mb-3">
+                        <h3 class="h6 fw-semibold mb-1">Iced Coffee</h3>
+                        <p class="product-desc mb-3">Smooth coffee brewed cold for a rich, refreshing pick-me-up.</p>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="price-label">₹129</span>
+                            <a href="#" class="btn btn-brand btn-sm px-3 py-2">Add to Cart</a>
+                        </div>
+                    </article>
+                </div>
+                <div class="col">
+                    <article class="product-card p-3 h-100">
+                        <span class="product-tag">Sparkling</span>
+                        <img src="https://images.pexels.com/photos/572897/pexels-photo-572897.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Sparkling Water" class="img-fluid rounded-4 mb-3">
+                        <h3 class="h6 fw-semibold mb-1">Sparkling Water</h3>
+                        <p class="product-desc mb-3">Refreshing sparkling water with a clean taste, perfect for hydration.</p>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="price-label">₹99</span>
+                            <a href="#" class="btn btn-brand btn-sm px-3 py-2">Add to Cart</a>
+                        </div>
+                    </article>
+                </div>
+                <div class="col">
+                    <article class="product-card p-3 h-100">
+                        <span class="product-tag">Sweet</span>
+                        <img src="https://images.pexels.com/photos/7083332/pexels-photo-7083332.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Mango Lassi" class="img-fluid rounded-4 mb-3">
+                        <h3 class="h6 fw-semibold mb-1">Mango Lassi</h3>
+                        <p class="product-desc mb-3">Creamy mango yogurt drink with a tropical, sweet finish.</p>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="price-label">₹169</span>
+                            <a href="#" class="btn btn-brand btn-sm px-3 py-2">Add to Cart</a>
+                        </div>
+                    </article>
+                </div>
+                <div class="col">
+                    <article class="product-card p-3 h-100">
+                        <span class="product-tag">Refreshing</span>
+                        <img src="https://images.pexels.com/photos/1470473/pexels-photo-1470473.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Lemonade" class="img-fluid rounded-4 mb-3">
+                        <h3 class="h6 fw-semibold mb-1">Lemonade</h3>
+                        <p class="product-desc mb-3">Classic lemonade with a zesty citrus kick to cool down your day.</p>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="price-label">₹139</span>
+                            <a href="#" class="btn btn-brand btn-sm px-3 py-2">Add to Cart</a>
+                        </div>
+                    </article>
+                </div>
+                <div class="col">
+                    <article class="product-card p-3 h-100">
+                        <span class="product-tag">Energetic</span>
+                        <img src="https://images.pexels.com/photos/1081296/pexels-photo-1081296.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Protein Shake" class="img-fluid rounded-4 mb-3">
+                        <h3 class="h6 fw-semibold mb-1">Protein Shake</h3>
+                        <p class="product-desc mb-3">High-protein shake for fitness, recovery, and sustained energy.</p>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="price-label">₹189</span>
+                            <a href="#" class="btn btn-brand btn-sm px-3 py-2">Add to Cart</a>
+                        </div>
+                    </article>
+                </div>
+                <div class="col">
+                    <article class="product-card p-3 h-100">
+                        <span class="product-tag">Wellness</span>
+                        <img src="https://images.pexels.com/photos/4051702/pexels-photo-4051702.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Herbal Tea" class="img-fluid rounded-4 mb-3">
+                        <h3 class="h6 fw-semibold mb-1">Herbal Tea</h3>
+                        <p class="product-desc mb-3">A soothing herbal tea blend perfect for calm evenings.</p>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="price-label">₹159</span>
+                            <a href="#" class="btn btn-brand btn-sm px-3 py-2">Add to Cart</a>
+                        </div>
+                    </article>
+                </div>
+                <div class="col">
+                    <article class="product-card p-3 h-100">
+                        <span class="product-tag">Classic</span>
+                        <img src="https://images.pexels.com/photos/540518/pexels-photo-540518.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Black Coffee" class="img-fluid rounded-4 mb-3">
+                        <h3 class="h6 fw-semibold mb-1">Black Coffee</h3>
+                        <p class="product-desc mb-3">Bold black coffee with rich aroma and smooth flavor.</p>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="price-label">₹119</span>
+                            <a href="#" class="btn btn-brand btn-sm px-3 py-2">Add to Cart</a>
+                        </div>
+                    </article>
+                </div>
+                <div class="col">
+                    <article class="product-card p-3 h-100">
+                        <span class="product-tag">Fruity</span>
+                        <img src="https://images.pexels.com/photos/1402749/pexels-photo-1402749.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Apple Cider" class="img-fluid rounded-4 mb-3">
+                        <h3 class="h6 fw-semibold mb-1">Apple Cider</h3>
+                        <p class="product-desc mb-3">Sweet apple cider with a smooth, refreshing finish.</p>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="price-label">₹169</span>
+                            <a href="#" class="btn btn-brand btn-sm px-3 py-2">Add to Cart</a>
+                        </div>
+                    </article>
+                </div>
+                <div class="col">
+                    <article class="product-card p-3 h-100">
+                        <span class="product-tag">Cold</span>
+                        <img src="https://images.pexels.com/photos/614842/pexels-photo-614842.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Cold Brew" class="img-fluid rounded-4 mb-3">
+                        <h3 class="h6 fw-semibold mb-1">Cold Brew</h3>
+                        <p class="product-desc mb-3">Smooth cold brew coffee with a mellow, low-acid finish.</p>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="price-label">₹159</span>
+                            <a href="#" class="btn btn-brand btn-sm px-3 py-2">Add to Cart</a>
+                        </div>
+                    </article>
+                </div>
+                <div class="col">
+                    <article class="product-card p-3 h-100">
+                        <span class="product-tag">Hydration</span>
+                        <img src="https://images.pexels.com/photos/3933515/pexels-photo-3933515.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Coconut Water" class="img-fluid rounded-4 mb-3">
+                        <h3 class="h6 fw-semibold mb-1">Coconut Water</h3>
+                        <p class="product-desc mb-3">Naturally hydrating coconut water with electrolytes for refreshment.</p>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="price-label">₹139</span>
+                            <a href="#" class="btn btn-brand btn-sm px-3 py-2">Add to Cart</a>
+                        </div>
+                    </article>
+                </div>
+                <div class="col">
+                    <article class="product-card p-3 h-100">
+                        <span class="product-tag">Berry</span>
+                        <img src="https://images.pexels.com/photos/5577845/pexels-photo-5577845.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Berry Smoothie" class="img-fluid rounded-4 mb-3">
+                        <h3 class="h6 fw-semibold mb-1">Berry Smoothie</h3>
+                        <p class="product-desc mb-3">A vibrant berry blend with blueberries, strawberries, and yogurt.</p>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="price-label">₹179</span>
+                            <a href="#" class="btn btn-brand btn-sm px-3 py-2">Add to Cart</a>
+                        </div>
+                    </article>
+                </div>
+                <div class="col">
+                    <article class="product-card p-3 h-100">
+                        <span class="product-tag">Zesty</span>
+                        <img src="https://images.pexels.com/photos/6208086/pexels-photo-6208086.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Mint Mojito" class="img-fluid rounded-4 mb-3">
+                        <h3 class="h6 fw-semibold mb-1">Mint Mojito</h3>
+                        <p class="product-desc mb-3">Cooling mint mojito soda with lime and refreshing sparkle.</p>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="price-label">₹129</span>
+                            <a href="#" class="btn btn-brand btn-sm px-3 py-2">Add to Cart</a>
+                        </div>
+                    </article>
+                </div>
+                <div class="col">
+                    <article class="product-card p-3 h-100">
+                        <span class="product-tag">Comfort</span>
+                        <img src="https://images.pexels.com/photos/265087/pexels-photo-265087.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Turmeric Latte" class="img-fluid rounded-4 mb-3">
+                        <h3 class="h6 fw-semibold mb-1">Turmeric Latte</h3>
+                        <p class="product-desc mb-3">Warm turmeric latte with spices and creamy milk for comfort.</p>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="price-label">₹149</span>
+                            <a href="#" class="btn btn-brand btn-sm px-3 py-2">Add to Cart</a>
+                        </div>
+                    </article>
+                </div>
+                <div class="col">
+                    <article class="product-card p-3 h-100">
+                        <span class="product-tag">Summer</span>
+                        <img src="https://images.pexels.com/photos/163079/apple-drink-iced-tea-ice-tea-163079.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Peach Iced Tea" class="img-fluid rounded-4 mb-3">
+                        <h3 class="h6 fw-semibold mb-1">Peach Iced Tea</h3>
+                        <p class="product-desc mb-3">Sweet peach iced tea served chilled with a fruity finish.</p>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="price-label">₹139</span>
+                            <a href="#" class="btn btn-brand btn-sm px-3 py-2">Add to Cart</a>
+                        </div>
+                    </article>
+                </div>
+                <div class="col">
+                    <article class="product-card p-3 h-100">
+                        <span class="product-tag">Plant</span>
+                        <img src="https://images.pexels.com/photos/736758/pexels-photo-736758.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Almond Milk" class="img-fluid rounded-4 mb-3">
+                        <h3 class="h6 fw-semibold mb-1">Almond Milk</h3>
+                        <p class="product-desc mb-3">Creamy almond milk perfect for cereals, smoothies, and coffee.</p>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="price-label">₹159</span>
+                            <a href="#" class="btn btn-brand btn-sm px-3 py-2">Add to Cart</a>
+                        </div>
+                    </article>
+                </div>
+                <div class="col">
+                    <article class="product-card p-3 h-100">
+                        <span class="product-tag">Infused</span>
+                        <img src="https://images.pexels.com/photos/1405031/pexels-photo-1405031.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Berry Infusion" class="img-fluid rounded-4 mb-3">
+                        <h3 class="h6 fw-semibold mb-1">Berry Infusion</h3>
+                        <p class="product-desc mb-3">A berry-infused drink with a burst of natural sweetness.</p>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="price-label">₹169</span>
+                            <a href="#" class="btn btn-brand btn-sm px-3 py-2">Add to Cart</a>
+                        </div>
+                    </article>
+                </div>
+                <div class="col">
+                    <article class="product-card p-3 h-100">
+                        <span class="product-tag">Spicy</span>
+                        <img src="https://images.pexels.com/photos/209224/pexels-photo-209224.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Ginger Lemonade" class="img-fluid rounded-4 mb-3">
+                        <h3 class="h6 fw-semibold mb-1">Ginger Lemonade</h3>
+                        <p class="product-desc mb-3">Tart lemonade with a ginger bite for an invigorating sip.</p>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="price-label">₹129</span>
+                            <a href="#" class="btn btn-brand btn-sm px-3 py-2">Add to Cart</a>
+                        </div>
+                    </article>
+                </div>
+                <div class="col">
+                    <article class="product-card p-3 h-100">
+                        <span class="product-tag">Warm</span>
+                        <img src="https://images.pexels.com/photos/302899/pexels-photo-302899.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Chai Latte" class="img-fluid rounded-4 mb-3">
+                        <h3 class="h6 fw-semibold mb-1">Chai Latte</h3>
+                        <p class="product-desc mb-3">Spiced chai latte topped with foam and warm comfort notes.</p>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="price-label">₹149</span>
+                            <a href="#" class="btn btn-brand btn-sm px-3 py-2">Add to Cart</a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="footer-shell text-secondary py-5 mt-auto border-top border-secondary-subtle">
+        <div class="container mb-4">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <h5 class="text-white fw-bold mb-3">FreshCart</h5>
+                    <p class="small">Your favorite online grocery store delivering fresh beverages and essentials straight to your door.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="text-white fw-bold mb-3">Quick Links</h5>
+                    <ul class="list-unstyled small d-flex flex-column gap-2">
+                        <li><a href="about.html" class="text-secondary text-decoration-none text-white-hover">About Us</a></li>
+                        <li><a href="contact.html" class="text-secondary text-decoration-none text-white-hover">Contact Us</a></li>
+                        <li><a href="login.html" class="text-secondary text-decoration-none text-white-hover">My Account</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="text-white fw-bold mb-3">Contact Info</h5>
+                    <p class="small mb-1">Email: support@freshcart.com</p>
+                    <p class="small">Phone: +123 456 7890</p>
+                </div>
+            </div>
+        </div>
+        <div class="container text-center border-top border-secondary pt-3 small">
+            &copy; 2026 FreshCart. All rights reserved.
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
