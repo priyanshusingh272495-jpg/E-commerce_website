@@ -3,9 +3,556 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>FreshCart - Shopping Cart</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* --- Brand Color Palette & Reset --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+    --brand: #dc2626;
+    --brand-dark: #b91c1c;
+    --ink: #111827;
+    --muted: #6b7280;
+    --soft: #fff7f2;
+}
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background:
+        radial-gradient(circle at top left, rgba(37, 99, 235, 0.08), transparent 28%),
+        linear-gradient(135deg, #f8fbff 0%, #f8fafc 100%);
+    color: var(--ink);
+}
+
+.page-shell {
+    overflow-x: hidden;
+}
+
+        .navbar-glass {
+    background: rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+    position: relative;
+}
+
+.navbar-glass::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(37, 99, 235, 0.06), transparent 40%, rgba(37, 99, 235, 0.04));
+    pointer-events: none;
+}
+
+.navbar-brand h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    letter-spacing: -0.02em;
+}
+
+.nav-link {
+    position: relative;
+    transition: color 0.25s ease;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0.75rem;
+    bottom: 0.35rem;
+    width: 0;
+    height: 2px;
+    background: #2563eb;
+    border-radius: 999px;
+    transition: width 0.25s ease;
+}
+
+.nav-link:hover::after,
+.nav-link:focus::after {
+    width: calc(100% - 1.5rem);
+}
+
+.nav-link:hover,
+.nav-link:focus {
+    color: #2563eb !important;
+    text-shadow: 0 0 12px rgba(37, 99, 235, 0.16);
+}
+
+.navbar .d-flex > a[href="login.html"]::after,
+.navbar .d-flex > a[href="login.html"]:hover::after,
+.navbar .d-flex > a[href="login.html"]:focus::after {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    background: transparent !important;
+}
+
+.nav-item .nav-link.active,
+.nav-link.active {
+    color: #2563eb !important;
+    font-weight: 700;
+}
+
+.nav-item .nav-link.active::after,
+.nav-link.active::after {
+    width: calc(100% - 1.5rem);
+}
+
+        /* --- Header (FreshCart Theme) --- */
+        header {
+            background-color: #ffffff;
+            padding: 15px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo {
+            font-size: 26px;
+            font-weight: 700;
+            color: #2b303a;
+            text-decoration: none;
+        }
+        
+        .logo span {
+            color: #cc292b; /* Image ke logo jaisa red color accent */
+        }
+        
+        nav {
+            display: flex;
+            align-items: center;
+        }
+        
+        nav a {
+            margin: 0 12px;
+            text-decoration: none;
+            color: #55585d;
+            font-weight: 500;
+            font-size: 15px;
+            transition: color 0.2s;
+        }
+        
+        nav a:hover, nav a.active {
+            color: #cc292b;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .login-btn {
+            text-decoration: none;
+            color: #2b303a;
+            font-weight: 500;
+            font-size: 15px;
+        }
+        
+        .signup-btn {
+            background-color: #ef2e31;
+            color: white;
+            padding: 8px 18px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 15px;
+            transition: background 0.2s;
+            box-shadow: #b91c1c65 0px 4px 12px;
+        }
+        
+        
+        /* --- Cart Container --- */
+        .cart-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            width: 100%;
+            flex: 1;
+        }
+        
+        .cart-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: #2b303a;
+        }
+        
+        .cart-wrapper {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        /* Cart Items Section (Left Side) */
+        .cart-items-section {
+            flex: 2;
+            min-width: 320px;
+        }
+        
+        .cart-item {
+            display: flex;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+            border: 1px solid #f0edf0;
+        }
+        
+        .item-details {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .item-image {
+            width: 90px;
+            height: 90px;
+            object-fit: cover;
+            border-radius: 8px;
+            background-color: #f5f5f5;
+        }
+        
+        .item-info .item-category {
+            font-size: 12px;
+            color: #2e7d32; /* Organic Green color */
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+        
+        .item-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2b303a;
+            margin-bottom: 6px;
+        }
+        
+        .item-price {
+            color: #cc292b;
+            font-weight: 700;
+            font-size: 16px;
+        }
+        
+        /* Quantity & Actions */
+        .item-actions {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+        
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            border: 1px solid #dcdcdc;
+            border-radius: 6px;
+            overflow: hidden;
+            background: #fff;
+        }
+        
+        .quantity-control button {
+            background: #f5f5f5;
+            border: none;
+            padding: 8px 14px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            color: #555;
+            transition: background 0.2s;
+        }
+        
+        .quantity-control button:hover {
+            background: #e8e8e8;
+        }
+        
+        .quantity-control span {
+            padding: 0 16px;
+            font-weight: 600;
+            font-size: 15px;
+            color: #2b303a;
+        }
+        
+        .remove-btn {
+            color: #a0a4a9;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            transition: color 0.2s;
+        }
+        
+        
+        
+        /* Order Summary Section (Right Side) */
+        .cart-summary-section {
+            flex: 1;
+            min-width: 320px;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+            border: 1px solid #f0edf0;
+            height: fit-content;
+        }
+        
+        .summary-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #2b303a;
+            border-bottom: 1px solid #f0edf0;
+            padding-bottom: 12px;
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            font-size: 15px;
+            color: #55585d;
+        }
+        
+        .summary-total {
+            font-size: 20px;
+            font-weight: 700;
+            border-top: 1px solid #f0edf0;
+            padding-top: 16px;
+            margin-top: 16px;
+            color: #2b303a;
+        }
+        
+        .summary-total .total-price {
+            color: #2e7d32; /* Total amount green se highlight */
+        }
+        
+        .checkout-btn {
+            width: 100%;
+            background: #2e7d32; /* Fresh Green Color for CTA button */
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background 0.2s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .checkout-btn:hover {
+            background-color: #236327;
+        }
+        
+        /* --- Footer --- */
+        footer {
+            background-color: #2b303a;
+            color: #ffffff;
+            text-align: center;
+            padding: 25px;
+            margin-top: auto;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+        }
+        
+        footer p {
+            opacity: 0.8;
+        }
+    </style>
 </head>
 <body>
-    <h1>hello world</h1>
+    <nav class="navbar navbar-expand-lg navbar-glass sticky-top py-3">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-brand fs-3" href="index.html">
+                <h1> <span style="color: #f34910;">Fresh</span> Cart</h1>
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0 fw-medium">
+                    <li class="nav-item">
+                        <a class="nav-link text-brand" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-secondary" href="fruits-vegetable.html">Fruits & Vegetables</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-secondary" href="beverages.html">Beverages</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-secondary" href="dairy.html">Dairy</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-secondary" href="snacks.html">Snacks</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-secondary" href="about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-secondary" href="contact.html">Contact</a>
+                    </li>
+                </ul>
+
+                <div class="d-flex align-items-center gap-3">
+                    <a href="login.html" class="nav-link fw-medium text-dark">Login</a>
+                    <a href="signup.html" class="signup-btn"><span style="color: #f1f1f1;">Sign Up</span></a>
+                    <a href="cart.html" class="position-relative p-2 text-secondary"></a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    
+    <div class="cart-container">
+        <h1 class="cart-title">Your Shopping Cart</h1>
+        
+        <div class="cart-wrapper">
+            
+            <div class="cart-items-section">
+                
+                <div class="cart-item">
+                    <div class="item-details">
+                        <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=150" alt="Organic Bread" class="item-image">
+                        <div class="item-info">
+                            <p class="item-category">Snacks & Bakery</p>
+                            <h3 class="item-name">Fresh Multi-Seed Organic Bread</h3>
+                            <p class="item-price">₹180.00</p>
+                        </div>
+                    </div>
+                    <div class="item-actions">
+                        <div class="quantity-control">
+                            <button>-</button>
+                            <span>1</span>
+                            <button>+</button>
+                        </div>
+                        <button class="remove-btn">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </div>
+                </div>
+
+                    <div class="cart-item">
+                    <div class="item-details">
+                        <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=150" alt="Organic Bread" class="item-image">
+                        <div class="item-info">
+                            <p class="item-category">Snacks & Bakery</p>
+                            <h3 class="item-name">Fresh Multi-Seed Organic Bread</h3>
+                            <p class="item-price">₹180.00</p>
+                        </div>
+                    </div>
+                    <div class="item-actions">
+                        <div class="quantity-control">
+                            <button>-</button>
+                            <span>1</span>
+                            <button>+</button>
+                        </div>
+                        <button class="remove-btn">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="cart-item">
+                    <div class="item-details">
+                        <img src="https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=150" alt="Organic Oranges" class="item-image">
+                        <div class="item-info">
+                            <p class="item-category">Fruits & Vegetables</p>
+                            <h3 class="item-name">Organic Fresh Oranges (1kg)</h3>
+                            <p class="item-price">₹120.00</p>
+                        </div>
+                    </div>
+                    <div class="item-actions">
+                        <div class="quantity-control">
+                            <button>-</button>
+                            <span>2</span>
+                            <button>+</button>
+                        </div>
+                        <button class="remove-btn">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="cart-summary-section">
+                <h2 class="summary-title">Order Summary</h2>
+                <div class="summary-row">
+                    <span>Subtotal (3 items)</span>
+                    <span>₹420.00</span>
+                </div>
+                <div class="summary-row">
+                    <span>Delivery Charges</span>
+                    <span style="color: #2e7d32; font-weight: 600;">FREE</span>
+                </div>
+                <div class="summary-row">
+                    <span>Tax (GST 5%)</span>
+                    <span>₹21.00</span>
+                </div>
+                
+                <div class="summary-total summary-row">
+                    <span>Total Amount</span>
+                    <span class="total-price">₹441.00</span>
+                </div>
+                
+                <button class="checkout-btn">
+                    Proceed to Checkout <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <footer class="footer-shell text-secondary py-5 mt-auto border-top border-secondary-subtle">
+        <div class="container mb-4">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <h5 class="text-white fw-bold mb-3">FreshCart</h5>
+                    <p class="small">Your favorite online grocery store delivering fresh products straight to your home.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="text-white fw-bold mb-3">Quick Links</h5>
+                    <ul class="list-unstyled small d-flex flex-column gap-2">
+                        <li><a href="about.html" class="text-secondary text-decoration-none text-white-hover">About Us</a></li>
+                        <li><a href="contact.html" class="text-secondary text-decoration-none text-white-hover">Contact Us</a></li>
+                        <li><a href="login.html" class="text-secondary text-decoration-none text-white-hover">My Account</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="text-white fw-bold mb-3">Contact Info</h5>
+                    <p class="small mb-1">Email: support@freshcart.com</p>
+                    <p class="small">Phone: +123 456 7890</p>
+                </div>
+            </div>
+        </div>
+        <div class="container text-center border-top border-secondary pt-3 small">
+            &copy; 2026 FreshCart. All rights reserved.
+        </div>
+    </footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
