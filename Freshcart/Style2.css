@@ -1,0 +1,116 @@
+*{
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.auth-shell {
+    min-height: calc(100vh - 160px);
+}
+
+.auth-card,
+.auth-aside {
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+.auth-aside {
+    background: rgba(255, 255, 255, 0.96);
+}
+
+.auth-card {
+    background: #ffffff;
+}
+.red{
+    color: #dc2626;
+}
+
+.auth-card:hover,
+.auth-aside:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px rgba(220, 38, 38, 0.12);
+    border-color: rgba(220, 38, 38, 0.2);
+}
+
+.auth-card .form-control {
+    border-radius: 1rem;
+    padding: 1rem 1rem;
+    border: 1px solid rgba(15, 23, 42, 0.12);
+    background: #f9fafb;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.auth-card .form-control:focus {
+    border-color: rgba(220, 38, 38, 0.7);
+    box-shadow: 0 0 0 0.15rem rgba(220, 38, 38, 0.12);
+    transform: translateY(-1px);
+}
+
+.auth-card .btn-brand {
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+    border: none;
+    color: #ffffff;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.auth-card .btn-brand:hover {
+    background: linear-gradient(135deg, #b91c1c 0%, #991b1b 100%);
+    color: #ffffff;
+    transform: translateY(-2px) scale(1.01);
+    box-shadow: 0 12px 24px rgba(220, 38, 38, 0.2);
+}
+
+.auth-card a {
+    color: #dc2626;
+    transition: color 0.25s ease;
+}
+
+.auth-card a:hover,
+.auth-card a:focus {
+    color: #b91c1c;
+}
+
+.feature-card {
+    flex: 1 1 180px;
+    min-width: 180px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(220, 38, 38, 0.1);
+}
+
+.bg-soft {
+    background: #fff7f2;
+}
+
+.text-white-hover:hover,
+.text-white-hover:focus {
+    color: #ffffff !important;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.auth-card,
+.auth-aside,
+.feature-card {
+    animation: fadeUp 0.6s ease both;
+}
+
+@media (max-width: 767px) {
+    .auth-shell {
+        min-height: auto;
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+    }
+}
