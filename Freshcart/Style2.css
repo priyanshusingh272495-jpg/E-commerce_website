@@ -3,6 +3,11 @@
     padding: 0;
     box-sizing: border-box;
 }
+.btn-brand:hover{
+    color: white;
+    box-shadow: #fa2c2c4f 0px 4px 20px 0px;
+    background-color: #f32b2bea;
+}
 
 .auth-shell {
     min-height: calc(100vh - 160px);
@@ -13,6 +18,7 @@
     border: 1px solid rgba(15, 23, 42, 0.08);
     transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
 }
+
 
 .auth-aside {
     background: rgba(255, 255, 255, 0.96);

@@ -61,7 +61,6 @@ body {
     border-radius: 999px;
     transition: width 0.25s ease;
 }
-
 .nav-link:hover::after,
 .nav-link:focus::after {
     width: calc(100% - 1.5rem);
